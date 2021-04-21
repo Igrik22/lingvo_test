@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+
+  postgres:
+    image: postgres:10.10-alpine
+
+    restart: "no"
+    command: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=docker
+    ports:
+      - "5432:5432"
+
+  backend:
+    tty: true
+    build:
+      context: ""
+    command: python manage.py runserver 0.0.0.0:8000
+    restart: "no"
+    depends_on:
+      - postgres
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres:

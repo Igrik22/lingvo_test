@@ -8,28 +8,24 @@
         </td>
         <td>
           <button class="btn" type="button">
-            <router-link class="btn" to="/" type="button">Home Work</router-link>
+            Home Work
           </button>
         </td>
         <td>
-            <button class="btn" type="button">
-              <router-link class="btn" to="/about" type="button">Tests for you</router-link>
-            </button>
+          <button class="btn" type="button">
+            Tests for you
+          </button>
         </td>
         <td>
             <input type="button" value="rus">
         </td>
         <td class="right-col">
-          <button class="button4" @click="goLogin">Sign up/in</button>
+          <button class="button4" @click="goLogin">Login</button>
+          <Login v-if="isLoginVisible" @closeLogin="closeLogin"/>
         </td>
-        <td class="down-right-col">
-          <Login
-            v-if="isLoginVisible"
-            @closeLogin="closeLogin"
-          >
-            <input v-model="login" type="text" placeholder="Логин"/><br><br>
-            <input v-model="password" type="password" placeholder="Пароль"/>
-          </Login>
+        <td class="right-col">
+          <button class="button4" @click="goRegister">Register</button>
+          <register v-if="isRegisterVisible" @closeRegister="closeRegister"/>
         </td>
       </tr>
     </table>
@@ -42,15 +38,18 @@
 
 <script>
 import Login from '@/components/Login'
+import register from '@/components/register'
 
 export default {
   name: 'AppHeader',
   components: {
+    register,
     Login
   },
   data () {
     return {
-      isLoginVisible: false
+      isLoginVisible: false,
+      isRegisterVisible: false
     }
   },
   computed: {
@@ -68,6 +67,12 @@ export default {
     },
     closeLogin () {
       this.isLoginVisible = false
+    },
+    goRegister () {
+      this.isRegisterVisible = true
+    },
+    closeRegister () {
+      this.isRegisterVisible = false
     }
   }
 }
@@ -104,21 +109,20 @@ export default {
   table.all td {
     width: 100%; /* Ширина ячеек */
     vertical-align: top; /* Выравнивание по верхнему краю */
-    padding: 24px;
    }
-  td button {
+  td button.btn {
    font-family: Arial, Helvetica, sans-serif;
-   font-size: 16px;
+   font-size: 14px;
    width: 130px;
    height: 40px;
    float: left;
-   margin: 6px 2px 5px 10px;
    background: -webkit-gradient(linear, left top, left bottom, from(lightpink),
      color-stop(0.78, antiquewhite), to(antiquewhite));
    border-radius: 14px;
    outline: none;
    border: none;
-   }
+   margin: 30px;
+  }
   td button:hover {
     box-shadow: inset 0 -1px 1px rgba(0,0,0,0), inset 0 1px 2px rgba(0,0,0,0), inset 0 0 0 60px rgba(255,255,0,.5);
   }
@@ -131,14 +135,15 @@ export default {
     line-height: normal;
     font-family: Montserrat,Verdana,sans-serif;
     list-style: initial;
-    font-size: 12px;
-    padding: 10%;
+    font-size: 10px;
+    padding: 12%;
     position: marker;
     border-radius: 50%;
     outline: none;
     border: none;
     color: darkblue;
     background: rebeccapurple;
+    margin: 30px;
    }
   td input:hover {
     box-shadow: inset 0 -1px 1px rgba(0,0,0,0), inset 0 1px 2px rgba(0,0,0,0), inset 0 0 0 60px rgba(255,255,0,.5);
@@ -178,4 +183,39 @@ export default {
     width: 100%;
     min-height: 90px;
   }
+  .v-popup {
+    margin-left: -180px;
+    padding: 30px;
+    position: absolute;
+    align-items: center;
+    top: 100px;
+    background: gray;
+
+    &__header {
+      display: initial;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      width: 200px;
+    }
+      input.form-control {
+        display: compact;
+        justify-content: center;
+        align-items: center;
+        background: yellow;
+        border-radius: 14px;
+        margin: 5px;
+      }
+      i {
+        color: red;
+      }
+      button.w-100.btn.btn-lg.btn-primary {
+        color: yellow;
+        background: #00BBD6;
+        display: compact;
+        justify-content: center;
+        align-items: center;
+        margin: 2px;
+  }
+}
 </style>

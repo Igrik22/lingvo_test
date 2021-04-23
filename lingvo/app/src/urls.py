@@ -16,7 +16,7 @@ Including another URLconf
 import djoser as djoser
 from django.contrib import admin
 from django.urls import path, include, re_path
-from HomeWork.views import CustomAuthToken
+# from HomeWork.views import CustomAuthToken
 # from rest_framework_simplejwt.views import (
 #     TokenObtainPairView,
 #     TokenRefreshView, TokenVerifyView,

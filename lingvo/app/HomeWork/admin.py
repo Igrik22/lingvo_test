@@ -1,5 +1,11 @@
+from HomeWork.models import FinishedHomeWork, HomeWork, User
 from django.contrib import admin
-from HomeWork.models import FinishedHomeWork, HomeWork
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'password')
+    search_fields = ('username',)
 
 
 @admin.register(HomeWork)

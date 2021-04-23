@@ -1,16 +1,17 @@
 <template>
-    <div class="v-popup">
+  <div class="v-popup">
       <div class="v-popup_header">
-        <span>
-            <i class="material-icons" @click="closeLogin">close</i>
-        </span><br><br>
-        <span>Enter login and password</span><br><br>
-      </div>
-      <div class="v-popup_content">
-          <slot></slot>
-      </div>
-      <div class="v-popup_footer">
-        <button class="submit_btn" @click="setLogin">enter</button>
+        <main class="form-signin">
+          <form>
+            <span>
+              <i class="material-icons" @click="closeLogin">close</i>
+            </span><br><br>
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+              <input type="email" class="form-control" placeholder="Email" required>
+              <input type="password" class="form-control" placeholder="Password" required>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+          </form>
+        </main>
       </div>
     </div>
 </template>
@@ -24,7 +25,7 @@ export default {
   name: 'Login',
   data () {
     return {
-      login: '',
+      email: '',
       password: ''
     }
   },
@@ -34,7 +35,7 @@ export default {
         url: 'http://127.0.0.1:8000/auth/jwt/refresh/',
         type: 'POST',
         data: {
-          username: this.login,
+          username: this.email,
           password: this.password
         },
         success: (response) => {
@@ -55,38 +56,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .v-popup {
-    margin-left: -240px;
-    padding: 30px;
-    position: absolute;
-    align-items: center;
-    top: 100px;
-    background: gray;
-    &__header, &__foter {
-      display: initial;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      width: 200px;
-    }
-    input {
-      display: compact;
-      justify-content: center;
-      align-items: center;
-      background: yellow;
-      border-radius: 14px;
-      width: 150px;
-      height: 3px;
-    }
-    .submit_btn {
-      padding: 8px;
-      color: white;
-      background: black;
-    }
-    i {
-      color: red;
-      }
-}
-</style>

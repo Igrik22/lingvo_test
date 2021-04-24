@@ -1,21 +1,10 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser, User
 from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
 from django.db import models
 from HomeWork.validators import validate_file_size
 
-
-class User(AbstractUser):
-    username = models.CharField(max_length=255, unique=True)
-    email = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    name = None
-
-    class Meta:
-        unique_together = ['username', 'email', 'password']
-    #
-    USERNAME_FIELD = 'username'
-    # REQUIRED_FIELDS = ['']
-
+User = get_user_model()
 
 faculty_choices = [
         ('B', 'Business'),

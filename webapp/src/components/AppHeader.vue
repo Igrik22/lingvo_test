@@ -51,15 +51,14 @@ export default {
       isLoginVisible: false,
       isRegisterVisible: false
     }
-  },
-  computed: {
-    auth () {
-      if (sessionStorage.getItem('auth-token')) {
-        return true
-      } else {
-        return 'incorrect data'
-      }
-    }
+  // computed: {
+  //   auth () {
+  //     if (sessionStorage.getItem('auth-token')) {
+  //       return true
+  //     } else {
+  //       return 'incorrect data'
+  //     }
+  //   }
   },
   methods: {
     goLogin () {
@@ -209,7 +208,7 @@ export default {
       i {
         color: red;
       }
-      button.w-100.btn.btn-lg.btn-primary {
+      input.w-100.btn.btn-lg.btn-primary {
         color: yellow;
         background: #00BBD6;
         display: compact;

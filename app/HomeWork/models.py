@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
 from django.db import models
-from HomeWork.validators import validate_file_size
+from .validators import validate_file_size
 
 
 class User(AbstractUser):

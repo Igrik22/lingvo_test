@@ -7,9 +7,9 @@
               <i class="material-icons" @click="closeLogin">close</i>
             </span><br><br>
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-              <input type="email" class="form-control" placeholder="Email" required>
-              <input type="password" class="form-control" placeholder="Password" required>
-            <input class="w-100 btn btn-lg btn-primary" type="button" @click="signIn"/>
+              <input v-model="user.email" type="email" class="form-control" placeholder="Email" required>
+              <input v-model="user.password" type="password" class="form-control" placeholder="Password" required>
+            <input class="w-100 btn btn-lg btn-primary" type="button" value="sign in" @click="signIn"/>
           </form>
         </main>
       </div>
@@ -23,8 +23,10 @@ export default {
   name: 'Login',
   data () {
     return {
-      email: '',
-      password: ''
+      user: {
+        email: '',
+        password: ''
+      }
     }
   },
   methods: {
@@ -33,7 +35,6 @@ export default {
     },
     signIn () {
       axios.post('http://localhost:8000/home-work/login/', {
-        username: this.user.username,
         email: this.user.email,
         password: this.user.password
       }).then(response => {
@@ -42,9 +43,7 @@ export default {
         this.closeRegister()
       })
         .catch(response => {
-          if (response.status === 400) {
-            alert('Логин или пароль не верен')
-          }
+          alert('Логин или пароль не верен')
         })
     }
   }

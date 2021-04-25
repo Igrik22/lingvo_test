@@ -60,6 +60,9 @@ export default {
         email: this.user.email,
         password: this.user.password
       }).then(response => { this.user = response.data; alert('Welcome:)'); this.closeRegister() })
+        .catch(response => {
+          alert('Возможно пользователь с таким именем уже существует')
+        })
     }
   }
 }

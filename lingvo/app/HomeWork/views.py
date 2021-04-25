@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from . import models
@@ -14,6 +14,18 @@ class RegisterView(APIView):
         # serializer.save()
         print(request.data)
         user, _ = models.User.objects.get_or_create(**request.data)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+class LoginView(APIView):
+
+    def post(self, request):
+        if request.data.get('email') and request.data.get('password') and models.User.objects\
+                .filter(**request.data):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        user = models.User.objects.get(**request.data)
         serializer = UserSerializer(user)
         return Response(serializer.data)
 

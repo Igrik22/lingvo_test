@@ -4,3 +4,5 @@ requests
 djoser==2.0.3
 djangorestframework-simplejwt==4.6.0
 django-cors-headers==3.7.0
+psycopg2-binary
+psycopg2==2.8.6

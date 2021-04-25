@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.polls.views import QuestionAnswer, GetQuestion
+from polls.views import QuestionAnswer, GetQuestion, GetTestTheme, GetTestResult
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', GetQuestion.as_view()),
+    path('question/', GetQuestion.as_view()),
     path('answer/', QuestionAnswer.as_view()),
+    path("test_theme/", GetTestTheme.as_view()),
+    path("test_result/", GetTestResult.as_view()),
 ]

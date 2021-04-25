@@ -1,9 +1,18 @@
 from django.db import models
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User, Group
-from core import settings
-import datetime
+from lingvo_3 import settings
+from datetime import datetime
 
+
+class Contact(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+#----------------------------------------------------------------------
 
 class Question(models.Model):
     title = models.CharField(max_length=4096)
@@ -35,12 +44,25 @@ class Answer(models.Model):
 
 # ---------------------------------------------------------------------
 
+
 class TestTheme(models.Model):
     theme_name = models.CharField(max_length=255)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group")
+    final_date = models.DateTimeField(default=None)
+    test_active = models.BooleanField()
 
     def __str__(self):
         return self.theme_name
+
+    @property
+    def deadline_check(self):
+        from django.utils import timezone
+        if self.final_date > timezone.datetime.today():
+            print('Тест активен')
+            return True
+        else:
+            print('Срок прохождения теста истек')
+            return False
 
 
 class TestQuestion(models.Model):

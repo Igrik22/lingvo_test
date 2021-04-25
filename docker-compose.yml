@@ -1,6 +1,66 @@
 version: '3.7'
 services:
 
+  redis:
+    image: redis
+    container_name: redis
+    command: ["redis-server", "--port", "6379", "--appendonly", "yes","--maxmemory", "1gb", "--maxmemory-policy", "allkeys-lru"]
+    ports:
+        - "6379:6379"
+    volumes:
+      - .:/redis.conf
+
+  celery-worker:
+    build:
+      context: .
+    container_name: celery-worker
+#    entrypoint: celery
+#    command: -A app.celery worker --loglevel=infoc
+    command: sh -c "cd app && celery -A lingvo_3 worker"
+#    command: "cd app && celery -A lingvo_3 worker"
+    volumes:
+      - .:/var/www/app/worker
+    links:
+      - redis
+    depends_on:
+      - redis
+      - backend
+
+  celery-beat:
+    build:
+      context: .
+    container_name: celery-beat
+    entrypoint: celery
+    command: sh -c "cd app && celery -A lingvo_3 beat --loglevel=info"
+#    command:  "cd app && celery -A lingvo_3 beat --loglevel=info"
+#    command: celery -A lingvo_3 beat
+    volumes:
+      - .:/var/www/app/beat
+    links:
+      - celery-worker
+      - redis
+    depends_on:
+      - celery-worker
+      - redis
+      - backend
+
+  flower:
+    image: mher/flower
+    container_name: flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379
+      - FLOWER_PORT=8888
+    ports:
+      - 8888:8888
+    links:
+      - redis
+      - celery-worker
+      - celery-beat
+    depends_on:
+      - redis
+      - celery-worker
+      - celery-beat
+
   postgres:
     image: postgres:10.10-alpine
     restart: "no"
@@ -20,7 +80,7 @@ services:
     tty: true
     build:
       context: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python ./app/manage.py runserver 0.0.0.0:8000
     restart: "no"
     depends_on:
       - postgres

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from django.contrib import admin
-from .models import Question, Answer, Choice, TestTheme, TestQuestion, TestChoice, TestResult
+from .models import Question, Answer, Choice, TestTheme, TestQuestion, TestChoice, TestResult, Contact
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -62,6 +62,12 @@ class TestResultAdmin(admin.ModelAdmin):
     list_filter = ('user', 'question',)
 
 
+class ContactAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'email'
+    )
+
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice, ChoiceAdmin)
 admin.site.register(Answer, AnswerAdmin)
@@ -69,3 +75,4 @@ admin.site.register(TestTheme, TestThemeAdmin)
 admin.site.register(TestQuestion, TestQuestionAdmin)
 admin.site.register(TestChoice, TestChoiceAdmin)
 admin.site.register(TestResult, TestResultAdmin)
+admin.site.register(Contact, ContactAdmin)

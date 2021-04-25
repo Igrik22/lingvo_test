@@ -1,10 +1,8 @@
-from django.shortcuts import render
-
-from .serializers import QuestionSerializer, AnswerSerializer
+from .serializers import QuestionSerializer, AnswerSerializer, TestThemeSerializer, TestResultSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from .models import Question
+from .models import Question, TestTheme, TestResult
 
 
 class GetQuestion(GenericAPIView):
@@ -28,3 +26,24 @@ class QuestionAnswer(GenericAPIView):
         if answer.is_valid(raise_exception=True):
             answer.save()
             return Response({'result': 'OK'})
+
+
+class GetTestTheme(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TestThemeSerializer
+    queryset = TestTheme.objects.all()
+
+    def get(self, request, format=None):
+        test_theme = TestTheme.objects.all()
+        serializer = TestThemeSerializer(test_theme, many=True)
+        return Response(serializer.data)
+
+
+class GetTestResult(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = TestResult.objects.all()
+
+    def get(self, request, format=None):
+        test_result = TestResult.objects.all()
+        serializer = TestResultSerializer(test_result, many=True)
+        return Response(serializer.data)

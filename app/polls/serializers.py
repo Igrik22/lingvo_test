@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Answer, Question, Choice
+from .models import Answer, Question, Choice, TestTheme, TestQuestion, TestChoice, TestResult, Contact
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
@@ -45,3 +45,31 @@ class AnswerSerializer(serializers.Serializer):
                 Answer(user=user, question=question, choice=choice).save()
                 user.is_answer = True
                 user.save()
+
+
+class TestThemeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TestTheme
+        fields = ['theme_name', 'group', 'final_date', 'test_active', ]
+
+
+class TestQuestionSerializer(serializers.Serializer):
+
+    class Meta:
+        model = TestQuestion
+        fields = ['theme', 'question', ]
+
+
+class TestChoiceSerializer(serializers.Serializer):
+
+    class Meta:
+        model = TestChoice
+        fields = ['question', 'text_answer', 'points', 'lock_other', ]
+
+
+class TestResultSerializer(serializers.Serializer):
+
+    class Meta:
+        model = TestResult
+        fields = ['user', 'question', 'choice', ]

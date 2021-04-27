@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'lingvo_3',
     'polls',
     'celery'
 ]
@@ -50,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ROOT_URLCONF = 'core.urls'
+ROOT_URLCONF = 'lingvo_3.urls'
 
 TEMPLATES = [
     {

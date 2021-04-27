@@ -16,10 +16,10 @@ services:
     container_name: celery-worker
 #    entrypoint: celery
 #    command: -A app.celery worker --loglevel=infoc
-    command: sh -c "cd app && celery -A lingvo_3 worker"
+    command: celery -A lingvo_3 worker
 #    command: "cd app && celery -A lingvo_3 worker"
     volumes:
-      - .:/var/www/app/worker
+      - ./app:/app
     links:
       - redis
     depends_on:
@@ -31,11 +31,11 @@ services:
       context: .
     container_name: celery-beat
     entrypoint: celery
-    command: sh -c "cd app && celery -A lingvo_3 beat --loglevel=info"
+    command: celery -A lingvo_3 beat --loglevel=info
 #    command:  "cd app && celery -A lingvo_3 beat --loglevel=info"
 #    command: celery -A lingvo_3 beat
     volumes:
-      - .:/var/www/app/beat
+      - ./app:/app
     links:
       - celery-worker
       - redis

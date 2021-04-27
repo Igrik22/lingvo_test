@@ -4,10 +4,10 @@ RUN apt-get install libpq-dev
 
 RUN mkdir /app
 #ADD ./app/requirements.txt /app/
-COPY . ./backend
-WORKDIR /backend
+COPY ./app /app
+WORKDIR /app
 
 RUN ls
-RUN pip install -r ./app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
 

@@ -7,14 +7,16 @@
           <span>English for dummies</span>
         </td>
         <td>
-          <button class="btn" type="button">
+          <button class="btn" type="button" @click="goHomeWork">
             Home Work
           </button>
+          <HomeWork v-if="isHomeWorkVisible" @closeHomeWork="closeHomeWork"/>
         </td>
         <td>
-          <button class="btn" type="button">
+          <button class="btn" type="button" @click="goFinishedHomeWork">
             Tests for you
           </button>
+          <FinishedHomeWork v-if="isFinishedHomeWorkVisible" @closeFinishedHomeWork="closeFinishedHomeWork"/>
         </td>
         <td>
             <input type="button" value="rus">
@@ -39,17 +41,23 @@
 <script>
 import Login from '@/components/Login'
 import register from '@/components/register'
+import HomeWork from '@/components/HomeWork'
+import FinishedHomeWork from '@/components/FinishedHomeWork'
 
 export default {
   name: 'AppHeader',
   components: {
     register,
-    Login
+    Login,
+    HomeWork,
+    FinishedHomeWork
   },
   data () {
     return {
       isLoginVisible: false,
-      isRegisterVisible: false
+      isRegisterVisible: false,
+      isHomeWorkVisible: false,
+      isFinishedHomeWorkVisible: false
     }
   // computed: {
   //   auth () {
@@ -72,6 +80,18 @@ export default {
     },
     closeRegister () {
       this.isRegisterVisible = false
+    },
+    goHomeWork () {
+      this.isHomeWorkVisible = true
+    },
+    closeHomeWork () {
+      this.isHomeWorkVisible = false
+    },
+    goFinishedHomeWork () {
+      this.isFinishedHomeWorkVisible = true
+    },
+    closeFinishedHomeWork () {
+      this.isFinishedHomeWorkVisible = false
     }
   }
 }
@@ -121,6 +141,13 @@ export default {
    outline: none;
    border: none;
    margin: 30px;
+  }
+  td button.btn:hover {
+    box-shadow: inset 0 -1px 1px rgba(0,0,0,0), inset 0 1px 2px rgba(0,0,0,0), inset 0 0 0 60px rgba(255,255,0,.5);
+  }
+   td button.btn:active {
+    border-color: rgba(177, 159, 0, 1);
+    box-shadow: inset 0 -1px 1px rgba(0, 0, 0, .1), inset 0 1px 2px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(255, 255, 0, .45);
   }
   td button:hover {
     box-shadow: inset 0 -1px 1px rgba(0,0,0,0), inset 0 1px 2px rgba(0,0,0,0), inset 0 0 0 60px rgba(255,255,0,.5);
@@ -197,24 +224,43 @@ export default {
       position: absolute;
       width: 200px;
     }
-      input.form-control {
-        display: compact;
-        justify-content: center;
-        align-items: center;
-        background: yellow;
-        border-radius: 14px;
-        margin: 5px;
-      }
-      i {
-        color: red;
-      }
-      input.w-100.btn.btn-lg.btn-primary {
-        color: yellow;
-        background: #00BBD6;
-        display: compact;
-        justify-content: center;
-        align-items: center;
-        margin: 2px;
+
+    input.form-control {
+      display: compact;
+      justify-content: center;
+      align-items: center;
+      background: yellow;
+      border-radius: 14px;
+      margin: 5px;
+    }
+
+    i {
+      color: red;
+    }
+
+    input.w-100.btn.btn-lg.btn-primary {
+      color: yellow;
+      background: #00BBD6;
+      display: compact;
+      justify-content: center;
+      align-items: center;
+      margin: 2px;
+    }
   }
-}
+  .v-popup.padding {
+    margin-left: -400px;
+    padding: 200px;
+    position: absolute;
+    align-items: center;
+    top: 10px;
+    background: gray;
+
+    &__header {
+      display: initial;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      width: 200px;
+    }
+  }
 </style>

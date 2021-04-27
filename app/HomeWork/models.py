@@ -45,7 +45,7 @@ class HomeWork(Work):  # HomeWork
 
 
 class FinishedHomeWork(Work):
-    user = models.ForeignKey(User, verbose_name='User', on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, verbose_name='Username', on_delete=models.CASCADE)
     title = models.CharField(max_length=4096, default=None)
     home_work = models.ForeignKey(HomeWork, verbose_name='Home_work', on_delete=models.CASCADE)
     finished_home_work_file = models.FileField\

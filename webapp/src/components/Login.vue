@@ -42,9 +42,6 @@ export default {
         alert('Спасибо что Вы с нами:)')
         this.closeRegister()
       })
-        .catch(response => {
-          alert('Логин или пароль не верен')
-        })
     }
   }
 }

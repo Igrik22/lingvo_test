@@ -16,7 +16,7 @@ class HomeWorkAdmin(admin.ModelAdmin):
 
 @admin.register(FinishedHomeWork)
 class FinishedHomeWorkAdmin(admin.ModelAdmin):
-    list_display = ('title', 'home_work', 'finished_home_work_file', 'created', 'user', 'mark',
+    list_display = ('title', 'home_work', 'finished_home_work_file', 'created', 'mark',
                     'comment_of_mark', 'faculty')
     search_fields = ('title',)
 

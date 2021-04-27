@@ -22,7 +22,7 @@ class LoginView(APIView):
 
     def post(self, request):
         if request.data.get('email') and request.data.get('password') and models.User.objects\
-                .filter(**request.data):
+                .filter(**request.data) is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         user = models.User.objects.get(**request.data)
@@ -31,7 +31,7 @@ class LoginView(APIView):
 
 
 class HomeWorkAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     serializer_class = HomeWorkSerializer
 
     def get(self, request):
@@ -41,10 +41,15 @@ class HomeWorkAPIView(APIView):
 
 
 class FinishedHomeWorkAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
     serializer_class = FinishedHomeWorkSerializer
 
     def get(self, request):
         queryset = models.FinishedHomeWork.objects.all()
         serializer = FinishedHomeWorkSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+
+        file, _ = models.FinishedHomeWork.objects.get_or_create(**request.data)
+        serializer = HomeWorkSerializer(file)
         return Response(serializer.data)
